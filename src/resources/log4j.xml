@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- Console -->
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[DATE]%d{yyyy-MM-dd HH:mm:ss,SSS} [THREAD]%t [LEVEL]%p [CLASS]%c [METHOD]%M [LINE]%L [MESSAGE]%m%n" />
+		</layout>
+	</appender>
+
+	<!-- Daily File -->
+	<appender name="daily" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.home}/logs/application.log" />
+		<param name="Append" value="true" />
+		<param name="BufferSize" value="8192" />
+		<param name="DatePattern" value="yyyy_MM_dd'.'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[DATE]%d{yyyy-MM-dd HH:mm:ss,SSS} [THREAD]%t [LEVEL]%p [CLASS]%c [METHOD]%M [LINE]%L [MESSAGE]%m%n" />
+		</layout>
+	</appender>
+
+	<!-- Rolling File -->
+	<appender name="rolling" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="${catalina.home}/logs/application.log" />
+		<param name="Append" value="true" />
+		<param name="BufferSize" value="8192" />
+		<param name="MaxFileSize" value="10MB" />
+		<param name="MaxBackupIndex" value="10" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[DATE]%d{yyyy-MM-dd HH:mm:ss,SSS} [THREAD]%t [LEVEL]%p [CLASS]%c [METHOD]%M [LINE]%L [MESSAGE]%m%n" />
+		</layout>
+	</appender>
+
+	<!-- xikang Mail -->
+	<appender name="sendXikangMail" class="org.apache.log4j.net.SMTPAppender">
+		<param name="from" value="alarm@xikang.com" />
+		<param name="to" value="tian-m@neusoft.com" />
+		<param name="subject" value="Log4J Message" />
+		<param name="SMTPHost" value="mail.xikang.com" />
+		<param name="SMTPProtocol" value="smtps" />
+		<param name="SMTPPort" value="465" />
+		<param name="BufferSize" value="8192" />
+		<param name="SMTPUsername" value="alarm" />
+		<param name="SMTPPassword" value="neusoft" />
+		<param name="Threshold" value="ERROR" />
+		<param name="SMTPDebug" value="false" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[DATE]%d{yyyy-MM-dd HH:mm:ss,SSS} [THREAD]%t [LEVEL]%p [CLASS]%c [METHOD]%M [LINE]%L [MESSAGE]%m%n" />
+		</layout>
+	</appender>
+	
+	<!-- neusoft Mail -->
+	<appender name="sendNeusoftMail" class="org.apache.log4j.net.SMTPAppender">
+		<param name="from" value="xikang@neusoft.com" />
+		<param name="to" value="tian-m@neusoft.com" />
+		<param name="subject" value="zs online-Errors" />
+		<param name="SMTPHost" value="smtp.neusoft.com" />
+		<param name="SMTPProtocol" value="smtp" />
+		<param name="SMTPPort" value="587" />
+		<param name="BufferSize" value="8192" />
+		<param name="SMTPUsername" value="xikang" />
+		<param name="SMTPPassword" value="DR,neu_0723" />
+		<param name="Threshold" value="ERROR" />
+		<param name="SMTPDebug" value="false" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[DATE]%d{yyyy-MM-dd HH:mm:ss,SSS} [THREAD]%t [LEVEL]%p [CLASS]%c [METHOD]%M [LINE]%L [MESSAGE]%m%n" />
+		</layout>
+	</appender>
+
+	<!-- Socket -->
+	<appender name="socket" class="org.apache.log4j.net.SocketAppender">
+		<param name="Threshold" value="info" />
+		<param name="RemoteHost" value="localhost" />
+		<param name="Port" value="2012" />
+		<param name="LocationInfo" value="true" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[DATE]%d{yyyy-MM-dd HH:mm:ss,SSS} [THREAD]%t [LEVEL]%p [CLASS]%c [METHOD]%M [LINE]%L [MESSAGE]%m%n" />
+		</layout>
+	</appender>
+
+	<!-- Syslog -->
+	<appender name="syslog" class="org.apache.log4j.net.SyslogAppender">
+		<param name="Threshold" value="info" />
+		<param name="SyslogHost" value="localhost" />
+		<param name="Facility" value="LOCAL4" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[DATE]%d{yyyy-MM-dd HH:mm:ss,SSS} [THREAD]%t [LEVEL]%p [CLASS]%c [METHOD]%M [LINE]%L [MESSAGE]%m%n" />
+		</layout>
+	</appender>
+
+	<!-- MongoDB -->
+	<appender name="mongo" class="com.xikang.platform.core.logging.appender.MongoLog4jAppender">
+		<param name="host" value="10.10.18.94,10.10.18.95,10.10.18.96"/>
+		<param name="port" value="30000"/>
+		<param name="database" value="logs"/>
+		<param name="collectionPattern" value="appmart_%X{year}%X{month}"/>
+		<param name="warnOrHigherWriteConcern" value="FSYNC_SAFE"/>
+	</appender>
+
+	<!-- JDBC -->
+	<appender name="jdbc" class="org.apache.log4j.jdbc.JDBCAppender">
+		<param name="URL" value="jdbc:mysql://10.10.18.45:3306/test?characterEncoding=utf8"/>
+		<param name="driver" value="com.mysql.jdbc.Driver"/>
+		<param name="user" value="acorn"/>
+		<param name="password" value="acorn"/>
+		<param name="sql" value="INSERT INTO log4j (level, thread, message, position, log_date) VALUES ('%p', '%t', '%m', '%l', '%d{yyyy-MM-dd HH:mm:ss}')"/>
+	</appender>
+	
+	<!-- JMS -->
+	<appender name="jms" class="org.apache.log4j.net.JMSAppender">
+		<param name="Threshold" value="info" />
+		<param name="InitialContextFactoryName" value="org.apache.activemq.jndi.ActiveMQInitialContextFactory" />
+		<param name="ProviderURL" value="tcp://10.10.18.45:61616" />
+		<param name="TopicBindingName" value="logTopic" />
+		<param name="TopicConnectionFactoryBindingName" value="ConnectionFactory" />
+	</appender>
+
+	<!-- Asynchronous -->
+	<appender name="async" class="org.apache.log4j.AsyncAppender">
+		<param name="BufferSize" value="8192" />
+		<appender-ref ref="jms"/>
+	</appender>
+
+	<logger name="org.apache.activemq" additivity="false">
+		<level value="info" />
+		<appender-ref ref="console"/>
+	</logger>
+
+	<root>
+		<level value="info" />
+		<appender-ref ref="console" />
+	</root>
+
+</log4j:configuration>

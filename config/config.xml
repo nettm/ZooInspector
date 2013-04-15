@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zookeeper>
+	<server host="127.0.0.1:2181/config/s1">
+		<user name="admin" password="admin" role="admin" />
+		<user name="guest" password="guest" role="read" />
+	</server>
+	<server host="127.0.0.1:2181/config/s2">
+		<user name="admin" password="admin" role="admin" />
+		<user name="guest" password="guest" role="read" />
+	</server>
+</zookeeper>
